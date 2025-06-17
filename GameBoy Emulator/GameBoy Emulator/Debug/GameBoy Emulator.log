@@ -1,0 +1,8 @@
+﻿  GameBoy Emulator.cpp
+  GbCPU.cpp
+  GbMMU.cpp
+  Generating Code...
+  test.c
+GbCPU.obj : error LNK2005: "class GbCPU gpu" (?gpu@@3VGbCPU@@A) already defined in GameBoy Emulator.obj
+GbMMU.obj : error LNK2005: "class GbCPU gpu" (?gpu@@3VGbCPU@@A) already defined in GameBoy Emulator.obj
+C:\Users\ranim\source\repos\GameBoy Emulator\Debug\GameBoy Emulator.exe : fatal error LNK1169: one or more multiply defined symbols found
