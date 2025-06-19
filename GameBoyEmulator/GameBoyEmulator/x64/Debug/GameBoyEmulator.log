@@ -1,0 +1,5 @@
+﻿  GameBoyEmulator.cpp
+C:\Users\ranim\source\repos\GameBoyEmulator\GameBoyEmulator\tools.h(9,2): warning C4091: 'static ': ignored on left of 'tools' when no variable is declared
+  (compiling source file 'GameBoyEmulator.cpp')
+  
+  GameBoyEmulator.vcxproj -> C:\Users\ranim\source\repos\GameBoyEmulator\x64\Debug\GameBoyEmulator.exe
