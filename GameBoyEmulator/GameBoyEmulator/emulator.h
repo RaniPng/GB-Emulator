@@ -2,7 +2,7 @@
 #include "gbCPU.h"
 #include "gbMM.h"
 
-class emulator
+static class emulator
 {
 public: // temp
 	static gbCPU CPU;

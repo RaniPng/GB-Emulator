@@ -3,8 +3,11 @@
 #include "emulator.h"
 #include <iostream>
 
+
+
 int main()
 {
+
     emulator::CPU.test();
     std::cout << "Hello World!\n";
 }
