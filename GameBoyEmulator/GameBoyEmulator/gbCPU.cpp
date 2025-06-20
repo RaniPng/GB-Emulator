@@ -43,29 +43,29 @@ gbCPU::gbCPU()
 	opTable[0][0x0] = [this]() {nop(); };
 
 	opTable[0][0x1] = [this]() {ld(); };
-	FOR_BIT_SUBSETS(0x18, subset)
+	FOR_BIT_SUBSETS(0x30, subset)
 		opTable[0][0x1 | subset] = [this]() {ld(); };
 	opTable[0][0x2] = [this]() {ld(); };
-	FOR_BIT_SUBSETS(0x18, subset)
+	FOR_BIT_SUBSETS(0x30, subset)
 		opTable[0][0x2 | subset] = [this]() {ld(); };
 	opTable[0][0xa] = [this]() {ld(); };
-	FOR_BIT_SUBSETS(0x18, subset)
+	FOR_BIT_SUBSETS(0x30, subset)
 		opTable[0][0xa | subset] = [this]() {ld(); };
 	opTable[0][0x8] = [this]() {ld(); };
 
 	opTable[0][0x3] = [this]() {inc(); };
-	FOR_BIT_SUBSETS(0x18, subset)
+	FOR_BIT_SUBSETS(0x30, subset)
 		opTable[0][0x3 | subset] = [this]() {inc(); };
 	opTable[0][0xb] = [this]() {dec(); };
-	FOR_BIT_SUBSETS(0x18, subset)
+	FOR_BIT_SUBSETS(0x30, subset)
 		opTable[0][0xb | subset] = [this]() {dec(); };
 	opTable[0][0x9] = [this]() {add(); };
-	FOR_BIT_SUBSETS(0x18, subset)
+	FOR_BIT_SUBSETS(0x30, subset)
 		opTable[0][0x9 | subset] = [this]() {add(); };
 
 	opTable[0][0x4] = [this]() {inc(); };
 	FOR_BIT_SUBSETS(0x38, subset)
-		opTable[0][0x40 | subset] = [this]() { inc(); };
+		opTable[0][0x4 | subset] = [this]() { inc(); };
 	opTable[0][0x5] = [this]() {dec(); };
 	FOR_BIT_SUBSETS(0x38, subset)
 		opTable[0][0x5 | subset] = [this]() { dec(); };
@@ -90,40 +90,43 @@ gbCPU::gbCPU()
 
 	opTable[0][0x10] = [this]() {stop(); };
 #pragma endregion
+
 #pragma region Block1
 	// block 1
 	opTable[1][0x40] = [this]() {ld(); };
 	FOR_BIT_SUBSETS(0x3f, subset)
-		opTable[0][0x40 | subset] = [this]() { ld(); };
+		opTable[1][0x40 | subset] = [this]() { ld(); };
 	opTable[1][0x76] = [this]() {halt(); };
 #pragma endregion
+
 #pragma region Block2
 	// block 2
 	opTable[2][0x80] = [this]() {add(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x80 | subset] = [this]() { add(); };
+		opTable[2][0x80 | subset] = [this]() { add(); };
 	opTable[2][0x88] = [this]() {adc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x88 | subset] = [this]() { adc(); };
+		opTable[2][0x88 | subset] = [this]() { adc(); };
 	opTable[2][0x90] = [this]() {sub(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x90 | subset] = [this]() { sub(); };
+		opTable[2][0x90 | subset] = [this]() { sub(); };
 	opTable[2][0x98] = [this]() {sbc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x98 | subset] = [this]() { sbc(); };
+		opTable[2][0x98 | subset] = [this]() { sbc(); };
 	opTable[2][0xa0] = [this]() {_and(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0xa0 | subset] = [this]() { _and(); };
+		opTable[2][0xa0 | subset] = [this]() { _and(); };
 	opTable[2][0xa8] = [this]() {_xor(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0xa8 | subset] = [this]() { _xor(); };
+		opTable[2][0xa8 | subset] = [this]() { _xor(); };
 	opTable[2][0xb0] = [this]() {_or(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0xb0 | subset] = [this]() { _or(); };
+		opTable[2][0xb0 | subset] = [this]() { _or(); };
 	opTable[2][0xb8] = [this]() {cp(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0xb8 | subset] = [this]() { cp(); };
+		opTable[2][0xb8 | subset] = [this]() { cp(); };
 #pragma endregion
+
 #pragma region Block3
 	// block 3
 	opTable[3][0xc6] = [this]() {add(); };
@@ -137,28 +140,29 @@ gbCPU::gbCPU()
 
 	opTable[3][0xc0] = [this]() {ret(); };
 	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[0][0xc0 | subset] = [this]() { ret(); };
+		opTable[3][0xc0 | subset] = [this]() { ret(); };
 	opTable[3][0xc9] = [this]() {ret(); };
 	opTable[3][0xd9] = [this]() {reti(); };
 	opTable[3][0xc2] = [this]() {jp(); };
 	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[0][0xc2 | subset] = [this]() { jp(); };
+		opTable[3][0xc2 | subset] = [this]() { jp(); };
 	opTable[3][0xc3] = [this]() {jp(); };
 	opTable[3][0xe9] = [this]() {jp(); };
 	opTable[3][0xc4] = [this]() {call(); };
 	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[0][0xc4 | subset] = [this]() { call(); };
+		opTable[3][0xc4 | subset] = [this]() { call(); };
 	opTable[3][0xcd] = [this]() {call(); };
 	opTable[3][0xc7] = [this]() {rst(); };
-	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[0][0xc7 | subset] = [this]() { rst(); };
+	FOR_BIT_SUBSETS(0x38, subset)
+		opTable[3][0xc7 | subset] = [this]() { rst(); };
+
 
 	opTable[3][0xc1] = [this]() {pop(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0xc1 | subset] = [this]() { pop(); };
+		opTable[3][0xc1 | subset] = [this]() { pop(); };
 	opTable[3][0xc5] = [this]() {push(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0xc5 | subset] = [this]() { push(); };
+		opTable[3][0xc5 | subset] = [this]() { push(); };
 
 	opTable[3][0xcb] = [this]() {cb$(); };// prefix
 
@@ -176,42 +180,43 @@ gbCPU::gbCPU()
 	opTable[3][0xf3] = [this]() {di(); };
 	opTable[3][0xfb] = [this]() {ei(); };
 #pragma endregion
+
 #pragma region BlockCB
 	// block cb
 	opTable[4][0x0] = [this]() {rlc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x0 | subset] = [this]() { rlc(); };
+		opTable[4][0x0 | subset] = [this]() { rlc(); };
 	opTable[4][0x8] = [this]() {rrc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x8 | subset] = [this]() { rrc(); };
+		opTable[4][0x8 | subset] = [this]() { rrc(); };
 	opTable[4][0x10] = [this]() {rl(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x10 | subset] = [this]() { rl(); };
+		opTable[4][0x10 | subset] = [this]() { rl(); };
 	opTable[4][0x18] = [this]() {rr(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x18 | subset] = [this]() { rr(); };
+		opTable[4][0x18 | subset] = [this]() { rr(); };
 	opTable[4][0x20] = [this]() {sla(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x20 | subset] = [this]() { sla(); };
+		opTable[4][0x20 | subset] = [this]() { sla(); };
 	opTable[4][0x28] = [this]() {sra(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x28 | subset] = [this]() { sra(); };
+		opTable[4][0x28 | subset] = [this]() { sra(); };
 	opTable[4][0x30] = [this]() {swap(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x30 | subset] = [this]() { swap(); };
+		opTable[4][0x30 | subset] = [this]() { swap(); };
 	opTable[4][0x38] = [this]() {srl(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x38 | subset] = [this]() { srl(); };
+		opTable[4][0x38 | subset] = [this]() { srl(); };
 
 	opTable[4][0x40] = [this]() {bit(); };
-	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x40 | subset] = [this]() { bit(); };
+	FOR_BIT_SUBSETS(0x3f, subset)
+		opTable[4][0x40 | subset] = [this]() { bit(); };
 	opTable[4][0x80] = [this]() {res(); };
-	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0x80 | subset] = [this]() { res(); };
+	FOR_BIT_SUBSETS(0x3f, subset)
+		opTable[4][0x80 | subset] = [this]() { res(); };
 	opTable[4][0xc0] = [this]() {set(); };
-	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[0][0xc0 | subset] = [this]() { set(); };
+	FOR_BIT_SUBSETS(0x3f, subset)
+		opTable[4][0xc0 | subset] = [this]() { set(); };
 
 #pragma endregion
 
@@ -220,32 +225,46 @@ gbCPU::gbCPU()
 
 void gbCPU::test()
 {
-	tools::printBinary8(F);
-	setCarry;
-	tools::printBinary8(F);
-	setHCarry;
-	tools::printBinary8(F);
-	setN;
-	tools::printBinary8(F);
-	setZero;
-	tools::printBinary8(F);
+	std::cout << opTable[0].size() << std::endl;
+	std::cout << opTable[1].size() << std::endl;
+	std::cout << opTable[2].size() << std::endl;
+	std::cout << opTable[3].size() << std::endl;
+	std::cout << opTable[4].size() << std::endl;
 
-	clearFlags;
-	tools::printBinary8(F);
+	for (const auto& pair : opTable[0]) {
+		int key = pair.first;
+		auto& func = pair.second;
+		std::cout << "0x" << std::hex << key << " ";
+		func();
+	}
+	for (const auto& pair : opTable[1]) {
+		int key = pair.first;
+		auto& func = pair.second;
+		std::cout << "0x" << std::hex << key << " ";
+		func();
+	}
 
-	setCarry;
-	setHCarry;
-	setN;
-	setZero;
-	tools::printBinary8(F);
-	clearCarry;
-	tools::printBinary8(F);
-	clearHCarry;
-	tools::printBinary8(F);
-	clearN;
-	tools::printBinary8(F);
-	clearZero;
-	tools::printBinary8(F);
+	for (const auto& pair : opTable[2]) {
+		int key = pair.first;
+		auto& func = pair.second;
+		std::cout << "0x" << std::hex << key << " ";
+		func();
+	}
+
+	for (const auto& pair : opTable[3]) {
+		int key = pair.first;
+		auto& func = pair.second;
+		std::cout << "0x" << std::hex << key << " ";
+		func();
+	}
+
+	for (const auto& pair : opTable[4]) {
+		int key = pair.first;
+		auto& func = pair.second;
+		std::cout << "0x" << std::hex << key << " ";
+		func();
+	}
+
 }
 
 void gbCPU::tick()
@@ -278,23 +297,23 @@ void gbCPU::decodeOPcode()
 // OP CODES
 void gbCPU::nop()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::ld()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::inc()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::dec()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::add()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 	return; // temp
 	int8 opType = GetBLOCK(currentOP); // get the block
 	switch (opType)
@@ -318,160 +337,161 @@ void gbCPU::add()
 }
 void gbCPU::rlca()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rrca()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rla()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rra()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::daa()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::cpl()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::scf()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::ccf()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::jr()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::stop()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::halt()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::adc()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::sub()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::sbc()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::_and()
 {
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::_xor()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::_or()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::cp()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::ret()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::reti()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::jp()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::call()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rst()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::pop()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::push()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::ldh()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::di()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::ei()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::cb$()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rlc()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rrc()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rl()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::rr()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::sla()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::sra()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::swap()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::srl()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::bit()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::res()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }
 void gbCPU::set()
 {
-	std::cout << "Function name: " << __func__ << std::endl;
+	std::cout << __func__ << std::endl;
 }

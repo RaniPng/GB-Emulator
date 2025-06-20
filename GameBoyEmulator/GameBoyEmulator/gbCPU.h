@@ -3,6 +3,7 @@
 #include <functional>
 #include "Registers.h"
 #include "tools.h"
+#include <map>
 
 // zero flag - set if the last calculation returned zero 
 #define ZFLAG 0x40
@@ -67,7 +68,8 @@ public: // temp~~~~~~
 	void execiteInstruction(int8 op);
 	void fetch();
 	// op codes funcs
-	std::unordered_map<int8, std::function<void()>> opTable[5];
+	//std::unordered_map<int8, std::function<void()>> opTable[5];
+	std::map<int8, std::function<void()>> opTable[5];
 	void nop();
 	void ld();
 	void inc();
