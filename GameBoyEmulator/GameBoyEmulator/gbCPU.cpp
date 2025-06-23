@@ -3,7 +3,13 @@
 // temp
 #include <iostream>
 #define currentOP (emulator::MM.memory[PC])
+#define currentOP16 ((emulator::MM.memory[PC] << 8)+emulator::MM.memory[PC+1])
+#define proccedOP PC++;
+#define proccedOP16 PC+=2;
 #define nextOP (emulator::MM.memory[PC+1])
+#define nextOP16 ((emulator::MM.memory[PC+1] << 8)+emulator::MM.memory[PC+2])
+#define getAddressMemory(addr) (emulator::MM.memory[addr])
+#define setAddressMemory(addr, setNum) emulator::MM.memory[addr] = setNum;
 
 #define FOR_BIT_SUBSETS(mask, subset) \
     for (int subset = (mask); subset != 0; subset = ((subset - 1) & (mask)))
@@ -11,33 +17,6 @@
 
 gbCPU::gbCPU()
 {
-#pragma region registers
-	// registers op code
-	r8[0x0] = &B;
-	r8[0x1] = &C;
-	r8[0x2] = &D;
-	r8[0x3] = &E;
-	r8[0x4] = &H;
-	r8[0x5] = &LL;
-	r8[0x6] = &H; // [HL] lamda?
-	r8[0x7] = &A;
-
-	r16[0x0] = &BC;
-	r16[0x1] = &DE;
-	r16[0x2] = &HL;
-	r16[0x3] = &SP;
-
-	r16stk[0x0] = &BC;
-	r16stk[0x1] = &DE;
-	r16stk[0x2] = &HL;
-	r16stk[0x3] = &AF;
-
-	condition[0x0] = [this]() -> int { return !getZero; };
-	condition[0x1] = [this]() -> int { return getZero; };
-	condition[0x2] = [this]() -> int { return !getCarry; };
-	condition[0x3] = [this]() -> int { return getCarry; };
-#pragma endregion
-
 #pragma region Block0
 	// block 0
 	opTable[0][0x0] = [this]() {nop(); };
@@ -273,65 +252,277 @@ void gbCPU::tick()
 
 void gbCPU::decodeOPcode()
 {
-	int8 op = currentOP;
-	int8 block = GetBLOCK(op);
-	switch (block)
-	{
-	case BLOCK0:
-		break;
-	case BLOCK1:
-		break;
-	case BLOCK2:
-		break;
-	case BLOCK3:
-		break;
-	case BLOCK$CB:
-		break;
 
-	default:
+}
+
+int8 gbCPU::getConditionOp(int8 cond)
+{
+	switch (cond)
+	{
+	case 0x0:
+		return !getZero;
+		break;
+	case 0x1:
+		return getZero;
+		break;
+	case 0x2:
+		return !getCarry;
+		break;
+	case 0x3:
+		return getCarry;
 		break;
 	}
 }
 
+void gbCPU::set8RegisterOp(int8 reg, int8 setNum)
+{
+	switch (reg)
+	{
+	case 0x0:
+		B = setNum;
+		break;
+	case 0x1:
+		C = setNum;
+		break;
+	case 0x2:
+		D = setNum;
+		break;
+	case 0x3:
+		E = setNum;
+		break;
+	case 0x4:
+		H = setNum;
+		break;
+	case 0x5:
+		LL = setNum;
+		break;
+	case 0x6:
+		setAddressMemory(HL, setNum);
+		break;
+	case 0x7:
+		A = setNum;
+		break;
+	}
+}
+int8 gbCPU::get8RegisterOp(int8 reg)
+{
+	switch (reg)
+	{
+	case 0x0:
+		return B;
+	case 0x1:
+		return C;
+	case 0x2:
+		return D;
+	case 0x3:
+		return E;
+	case 0x4:
+		return H;
+	case 0x5:
+		return LL;
+	case 0x6:
+		return getAddressMemory(HL);
+	case 0x7:
+		return A;
+	}
+}
+
+void gbCPU::set16RegisterOp(int8 reg, int16 setNum)
+{
+	switch (reg)
+	{
+	case 0x0:
+		BC = setNum;
+		break;
+	case 0x1:
+		DE = setNum;
+		break;
+	case 0x2:
+		HL = setNum;
+		break;
+	case 0x3:
+		SP = setNum;
+		break;
+	}
+}
+int16 gbCPU::get16RegisterOp(int8 reg)
+{
+	switch (reg)
+	{
+	case 0x0:
+		return BC;
+	case 0x1:
+		return DE;
+	case 0x2:
+		return HL;
+	case 0x3:
+		return SP;
+	}
+}
+
+void gbCPU::setRegisterMemoryOp(int8 mem, int8 setNum)
+{
+	switch (mem)
+	{
+	case 0x0:
+		setAddressMemory(BC, setNum);
+		break;
+	case 0x1:
+		setAddressMemory(DE, setNum);
+		break;
+	case 0x2:
+		setAddressMemory(HL++, setNum);
+		break;
+	case 0x3:
+		setAddressMemory(HL--, setNum);
+		break;
+	}
+}
+int8 gbCPU::getRegisterMemoryOp(int8 mem)
+{
+	switch (mem)
+	{
+	case 0x0:
+		return getAddressMemory(BC);
+	case 0x1:
+		return getAddressMemory(DE);
+	case 0x2:
+		return getAddressMemory(HL++);
+	case 0x3:
+		return getAddressMemory(HL--);
+	}
+}
 
 // OP CODES
 void gbCPU::nop()
 {
+	// do nothing?... i guess
+	// only used for the timmer and cycele things. will be implemented later
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::ld()
 {
+	int8 op = currentOP;
+	proccedOP;
+	int8 block = GetBLOCK(op);
+	switch (block)
+	{
+	case BLOCK0:
+		if (op & 0b110) // ld r8, imm8
+		{
+			int8 num = currentOP;
+			proccedOP;
+			set8RegisterOp(tools::getSumRightRotateMask(op, 3, 0b111), num);
+		}
+		else
+		{
+			switch (op & 0b1111)
+			{
+			case 0b0001: // ld r16, imm16
+				int16 num = currentOP16;
+				proccedOP16;
+				set16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11), num);
+				break;
+			case 0b0010: // ld [r16mem], a
+				setRegisterMemoryOp(tools::getSumRightRotateMask(op, 4, 0b11), A);
+				break;
+			case 0b1010: // ld a, [r16mem]
+				A = getRegisterMemoryOp(tools::getSumRightRotateMask(op, 4, 0b11));
+				break;
+			case 0b1000: // ld [imm16], sp
+				int16 addr = currentOP16;
+				proccedOP16;
+				setAddressMemory(addr, SP);
+				break;
+			}
+		}
+		break;
+	case BLOCK1:
+		// ld r8, r8
+		if (op != 0b01110110) // not halt command
+			set8RegisterOp(tools::getSumRightRotateMask(op, 3, 0b111), tools::getSumRightRotateMask(op, 0, 0b111));
+		break;
+	case BLOCK3:
+		switch (op)
+		{
+		case 0b11101010: // ld [imm16], a
+			int16 addr = currentOP16;
+			proccedOP16;
+			setAddressMemory(addr, A);
+			break;
+		case 0b11111010: // ld a, [imm16]
+			int16 addr = currentOP16;
+			proccedOP16;
+			A = getAddressMemory(addr);
+			break;
+		case 0b11111000: // ld hl, sp + imm8
+			int8 toAdd = currentOP;
+			proccedOP;
+			HL = SP + toAdd;
+			break;
+		case 0b11111001: // ld sp, hl
+			SP = HL;
+			break;
+		}
+
+		break;
+	default:
+		break;
+	}
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::inc()
 {
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::dec()
 {
+	int8 op = currentOP;
+	proccedOP;
+	setN(1);
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::add()
 {
-	std::cout << __func__ << std::endl;
-	return; // temp
-	int8 opType = GetBLOCK(currentOP); // get the block
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	int8 opType = GetBLOCK(op); // get the block
 	switch (opType)
 	{
 	case BLOCK0:
-		// get the register by the bits (5 or 4)
-		HL += *(r16[currentOP & 0x30]);
+		// add hl, r16
+		int16 toAdd = get16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11));
+		setCarry((HL + toAdd) > 0xffff);
+		setHCarry((LL  + toAdd & 0xff) > 0xff);
+		HL += toAdd;
+		setZero(!HL);
+
 		break;
 	case BLOCK2:
-		// get the register by the bits (5 or 4)
-		HL += *(r8[currentOP & 0x7]);
+		// add a, r8
+		int8 toAdd = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+		setCarry((HL + toAdd) > 0xff);
+		setHCarry((LL + toAdd & 0xf) > 0xf);
+		A += toAdd;
+		setZero(!A);
 		break;
-	case BLOCK3: // read 2 blocks
-		int8 toAdd = nextOP;
-		if (currentOP == 0xc6) // add to a
+	case BLOCK3:
+		int8 toAdd = currentOP;
+		proccedOP;
+		if (op == 0xc6) // add a, imm8
+		{
 			A += toAdd;
-		else if (currentOP == 0xc8) // add to sp
+			setZero(!A);
+		}
+		else if (op == 0xc8) // add sp, imm8
+		{
 			SP += toAdd;
+			setZero(!SP);
+		}
 		break;
 	}
 }
@@ -429,11 +620,56 @@ void gbCPU::rst()
 }
 void gbCPU::pop()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+
+	int8 low = getAddressMemory(SP++);
+	int8 up = getAddressMemory(SP++);
+
+	switch (op)
+	{
+	case 0xc1:
+		B = up;
+		C = low;
+		break;
+	case 0xd1:
+		D = up;
+		E = low;
+		break;
+	case 0xe1:
+		H = up;
+		LL = low;
+		break;
+	case 0xf1:
+		A = up;
+		F = low;
+		break;
+	}
 }
 void gbCPU::push()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	SP--;
+	switch (op)
+	{
+	case 0xc5:
+		setAddressMemory(SP--, B);
+		setAddressMemory(SP, C);
+		break;
+	case 0xd5:
+		setAddressMemory(SP--, D);
+		setAddressMemory(SP, E);
+		break;
+	case 0xe5:
+		setAddressMemory(SP--, H);
+		setAddressMemory(SP, LL);
+		break;
+	case 0xf5:
+		setAddressMemory(SP--, A);
+		setAddressMemory(SP, F);
+		break;
+	}
 }
 void gbCPU::ldh()
 {

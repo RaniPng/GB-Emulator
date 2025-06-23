@@ -11,20 +11,20 @@
       "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\gbCPU.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\GameBoyEmulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\GameBoyEmulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\emulator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\emulator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\emulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\emulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\GameBoyEmulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\GameBoyEmulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\gbMM.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\gbMM.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\emulator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\emulator.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\emulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2A7E27EA-23D9-431E-8B00-EE1D7B401705}|GameBoyEmulator\\GameBoyEmulator.vcxproj|solutionrelative:GameBoyEmulator\\emulator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,11 +50,12 @@
               "RelativeToolTip": "GameBoyEmulator\\gbMM.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-20T16:48:16.655Z"
+              "WhenOpened": "2025-06-20T16:48:16.655Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "emulator.cpp",
               "DocumentMoniker": "C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\emulator.cpp",
               "RelativeDocumentMoniker": "GameBoyEmulator\\emulator.cpp",
@@ -72,7 +73,7 @@
               "RelativeDocumentMoniker": "GameBoyEmulator\\gbCPU.cpp",
               "ToolTip": "C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\gbCPU.cpp",
               "RelativeToolTip": "GameBoyEmulator\\gbCPU.cpp",
-              "ViewState": "AgIAAOUAAAAAAAAAAAAWwOkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAOgBAAAAAAAAAAAwwPQBAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-19T20:25:22.41Z",
               "EditorCaption": ""
@@ -85,27 +86,27 @@
               "RelativeDocumentMoniker": "GameBoyEmulator\\gbCPU.h",
               "ToolTip": "C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\gbCPU.h",
               "RelativeToolTip": "GameBoyEmulator\\gbCPU.h",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAWwEYAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwBUAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-06-19T19:44:58.74Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "GameBoyEmulator.cpp",
               "DocumentMoniker": "C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\GameBoyEmulator.cpp",
               "RelativeDocumentMoniker": "GameBoyEmulator\\GameBoyEmulator.cpp",
               "ToolTip": "C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\GameBoyEmulator.cpp",
               "RelativeToolTip": "GameBoyEmulator\\GameBoyEmulator.cpp",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-06-19T19:44:12.352Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "emulator.h",
               "DocumentMoniker": "C:\\Users\\ranim\\source\\repos\\GameBoyEmulator\\GameBoyEmulator\\emulator.h",
               "RelativeDocumentMoniker": "GameBoyEmulator\\emulator.h",
@@ -113,7 +114,8 @@
               "RelativeToolTip": "GameBoyEmulator\\emulator.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-06-19T19:45:51.304Z"
+              "WhenOpened": "2025-06-19T19:45:51.304Z",
+              "EditorCaption": ""
             }
           ]
         }

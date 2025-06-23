@@ -16,21 +16,16 @@
 
 /*flag macros*/
 // set
-#define setZero F |= ZFLAG;
-#define setN F |= NFLAG;
-#define setHCarry F |= HFLAG;
-#define setCarry F |= CFLAG;
-// clear
-#define clearFlags F ^= F;
-#define clearZero F &= ~ZFLAG;
-#define clearN F &= ~NFLAG;
-#define clearHCarry F &= ~HFLAG;
-#define clearCarry F &= ~CFLAG;
+#define setZero(b)		F = b? (F | ZFLAG): (F & (~ZFLAG));
+#define setN(b)			F = b? (F | NFLAG): (F & (~NFLAG));
+#define setHCarry(b)	F = b? (F | HFLAG): (F & (~HFLAG));
+#define setCarry(b)		F = b? (F | CFLAG): (F & (~CFLAG));
 // get
 #define getZero (F & ZFLAG)
 #define getN (F & NFLAG)
 #define getHCarry (F & HFLAG)
 #define getCarry (F & CFLAG)
+
 
 class gbCPU
 {
@@ -65,6 +60,13 @@ public: // temp~~~~~~
 	void test();
 	void tick();
 	void decodeOPcode();
+	int8 getConditionOp(int8 cond);
+	void set8RegisterOp(int8 reg, int8 setNum);
+	int8 get8RegisterOp(int8 reg);
+	void set16RegisterOp(int8 reg, int16 setNum);
+	int16 get16RegisterOp(int8 reg);
+	void setRegisterMemoryOp(int8 mem, int8 setNum);
+	int8 getRegisterMemoryOp(int8 mem);
 	void execiteInstruction(int8 op);
 	void fetch();
 	// op codes funcs
@@ -117,12 +119,7 @@ public: // temp~~~~~~
 	void res();
 	void set();
 
-	std::unordered_map<int8, int8*> r8;
-	std::unordered_map<int8, int16*> r16;
-	std::unordered_map<int8, int16*> r16stk;
-	std::unordered_map<int8, int16*> r16mem; // might need to use lamda
 	std::unordered_map<int8, std::function<int()>> condition; // might better to use lamda 
-
 };
 
 /*opcode block*/
