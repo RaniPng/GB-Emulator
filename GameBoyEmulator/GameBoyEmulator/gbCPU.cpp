@@ -302,6 +302,9 @@ void gbCPU::set8RegisterOp(int8 reg, int8 setNum)
 	case 0x7:
 		A = setNum;
 		break;
+	default:
+		std::cout << "error 8 bit reg set\n";
+		break;
 	}
 }
 int8 gbCPU::get8RegisterOp(int8 reg)
@@ -343,6 +346,9 @@ void gbCPU::set16RegisterOp(int8 reg, int16 setNum)
 	case 0x3:
 		SP = setNum;
 		break;
+	default:
+		std::cout << "error 16 bit reg set\n";
+		break;
 	}
 }
 int16 gbCPU::get16RegisterOp(int8 reg)
@@ -375,6 +381,9 @@ void gbCPU::setRegisterMemoryOp(int8 mem, int8 setNum)
 		break;
 	case 0x3:
 		setAddressMemory(HL--, setNum);
+		break;
+	default:
+		std::cout << "error reg mem set\n";
 		break;
 	}
 }
@@ -479,15 +488,41 @@ void gbCPU::inc()
 {
 	int8 op = currentOP;
 	proccedOP;
-	setN(0);
-	std::cout << __func__ << std::endl;
+	if (op & 0b011) // inc r16
+	{
+		int8 regPos = tools::getSumRightRotateMask(op, 4, 0b11);
+		set16RegisterOp(regPos, get16RegisterOp(regPos) + 1);
+	}
+	else if (op & 0b100) // inc r8
+	{
+		int8 regPos = tools::getSumRightRotateMask(op, 3, 0b111);
+		int8 toAdd = get8RegisterOp(regPos);
+		setHCarry(((toAdd & 0x0f) + 1) > 0x0f);
+		toAdd++;
+		setZero(!toAdd);
+		setN(0);
+		set16RegisterOp(regPos, toAdd);
+	}
 }
 void gbCPU::dec()
 {
 	int8 op = currentOP;
 	proccedOP;
-	setN(1);
-	std::cout << __func__ << std::endl;
+	if (op & 0b1011) // dec r16
+	{
+		int8 regPos = tools::getSumRightRotateMask(op, 4, 0b11);
+		set16RegisterOp(regPos, get16RegisterOp(regPos) - 1);
+	}
+	else if (op & 0b101) // dec r8
+	{
+		int8 regPos = tools::getSumRightRotateMask(op, 3, 0b111);
+		int8 toSub = get8RegisterOp(regPos);
+		setHCarry((toSub & 0x0f) == 0);
+		toSub--;
+		setZero(!toSub);
+		setN(1);
+		set8RegisterOp(regPos, toSub);
+	}
 }
 void gbCPU::add()
 {
@@ -532,48 +567,9 @@ void gbCPU::add()
 		break;
 	}
 }
-void gbCPU::rlca()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::rrca()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::rla()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::rra()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::daa()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::cpl()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::scf()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::ccf()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::jr()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::stop()
-{
-	std::cout << __func__ << std::endl;
-}
 void gbCPU::halt()
 {
+	// i guess do nothing for now too... untill timer and interrupt is implemented
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::adc()
@@ -715,26 +711,6 @@ void gbCPU::cp()
 	setHCarry((A & 0x0f) < (toComp & 0x0f));
 	setZero(A == toComp);
 }
-void gbCPU::ret()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::reti()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::jp()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::call()
-{
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::rst()
-{
-	std::cout << __func__ << std::endl;
-}
 void gbCPU::pop()
 {
 	int8 op = currentOP;
@@ -788,7 +764,25 @@ void gbCPU::push()
 		break;
 	}
 }
-void gbCPU::ldh()
+void gbCPU::swap()
+{
+	// swap r8
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+	setCarry(0);
+	int8 regPos = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regPos);
+	reg = ((reg & 0x0f) << 4) | ((reg & 0xf0) >> 4);
+	set8RegisterOp(regPos, reg);
+	setZero(reg);
+}
+void gbCPU::stop()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::daa()
 {
 	std::cout << __func__ << std::endl;
 }
@@ -800,7 +794,31 @@ void gbCPU::ei()
 {
 	std::cout << __func__ << std::endl;
 }
-void gbCPU::cb$()
+void gbCPU::cpl()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::scf()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::ccf()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::rlca()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::rrca()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::rla()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::rra()
 {
 	std::cout << __func__ << std::endl;
 }
@@ -828,10 +846,6 @@ void gbCPU::sra()
 {
 	std::cout << __func__ << std::endl;
 }
-void gbCPU::swap()
-{
-	std::cout << __func__ << std::endl;
-}
 void gbCPU::srl()
 {
 	std::cout << __func__ << std::endl;
@@ -848,3 +862,36 @@ void gbCPU::set()
 {
 	std::cout << __func__ << std::endl;
 }
+void gbCPU::ret()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::reti()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::jp()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::jr()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::call()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::rst()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::cb$()
+{
+	std::cout << __func__ << std::endl;
+}
+void gbCPU::ldh()
+{
+	std::cout << __func__ << std::endl;
+}
+
