@@ -456,8 +456,12 @@ void gbCPU::ld()
 			A = getAddressMemory(addr);
 			break;
 		case 0b11111000: // ld hl, sp + imm8
+			setZero(0);
+			setN(0);
 			int8 toAdd = currentOP;
 			proccedOP;
+			setHCarry(((SP & 0x0f) + (toAdd & 0x0f)) > 0x0f);
+			setHCarry(((SP & 0xff) + (toAdd & 0xff)) > 0xff);
 			HL = SP + toAdd;
 			break;
 		case 0b11111001: // ld sp, hl
@@ -497,16 +501,14 @@ void gbCPU::add()
 		// add hl, r16
 		int16 toAdd = get16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11));
 		setCarry((HL + toAdd) > 0xffff);
-		setHCarry((LL  + toAdd & 0xff) > 0xff);
+		setHCarry(((HL & 0x0fff) + (toAdd & 0x0fff)) > 0x0fff);
 		HL += toAdd;
-		setZero(!HL);
-
 		break;
 	case BLOCK2:
 		// add a, r8
 		int8 toAdd = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
-		setCarry((HL + toAdd) > 0xff);
-		setHCarry((LL + toAdd & 0xf) > 0xf);
+		setCarry((A + toAdd) > 0xff);
+		setHCarry(((A & 0x0f) + (toAdd & 0x0f)) > 0x0f);
 		A += toAdd;
 		setZero(!A);
 		break;
@@ -515,13 +517,17 @@ void gbCPU::add()
 		proccedOP;
 		if (op == 0xc6) // add a, imm8
 		{
+			setCarry((A + toAdd) > 0xff);
+			setHCarry(((A & 0x0f) + (toAdd & 0x0f)) > 0x0f);
 			A += toAdd;
 			setZero(!A);
 		}
 		else if (op == 0xc8) // add sp, imm8
 		{
+			setZero(0);
+			setCarry(((SP & 0xff) + toAdd) > 0xff);
+			setHCarry(((SP & 0x0f) + (toAdd & 0x0f)) > 0x0f);
 			SP += toAdd;
-			setZero(!SP);
 		}
 		break;
 	}
@@ -572,31 +578,142 @@ void gbCPU::halt()
 }
 void gbCPU::adc()
 {
-	std::cout << __func__ << std::endl;
+	int8 toAdd = getCarry;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	if (op == 0xce) // adc a, imm8
+	{
+		toAdd += currentOP;
+		proccedOP;
+	}
+	else // adc a, r8
+	{
+		toAdd += get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+	}
+	setCarry((A + toAdd) > 0xff);
+	setHCarry(((A & 0x0f) + (toAdd & 0x0f)) > 0x0f);
+	A += toAdd;
+	setZero(!A);
 }
 void gbCPU::sub()
 {
-	std::cout << __func__ << std::endl;
+	int8 toSub = 0;
+	int8 op = currentOP;
+	proccedOP;
+	setN(1);
+	if (op == 0xd6) // sub a, imm8
+	{
+		toSub = currentOP;
+		proccedOP;
+	}
+	else // sub a, r8
+	{
+		toSub = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+	}
+	setCarry(A < toSub);
+	setHCarry((A & 0x0f) < (toSub & 0x0f));
+	A -= toSub;
+	setZero(!A);
 }
 void gbCPU::sbc()
 {
-	std::cout << __func__ << std::endl;
+	int8 toSub = getCarry;
+	int8 op = currentOP;
+	proccedOP;
+	setN(1);
+	if (op == 0xd6) // sub a, imm8
+	{
+		toSub += currentOP;
+		proccedOP;
+	}
+	else // sub a, r8
+	{
+		toSub += get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+	}
+	setCarry(A < toSub);
+	setHCarry((A & 0x0f) < (toSub & 0x0f));
+	A -= toSub;
+	setZero(!A);
 }
 void gbCPU::_and()
 {
-	std::cout << __func__ << std::endl;
+	int8 toComp = 0;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(1);
+	setCarry(0);
+	if (op == 0xe6) // and a, imm8
+	{
+		toComp = currentOP;
+		proccedOP;
+	}
+	else // and a, r8
+	{
+		toComp = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+	}
+	A = A & toComp;
+	setZero(!A);
 }
 void gbCPU::_xor()
 {
-	std::cout << __func__ << std::endl;
+	int8 toComp = 0;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+	setCarry(0);
+	if (op == 0xee) // xor a, imm8
+	{
+		toComp = currentOP;
+		proccedOP;
+	}
+	else // xor a, r8
+	{
+		toComp = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+	}
+	A = A ^ toComp;
+	setZero(!A);
 }
 void gbCPU::_or()
 {
-	std::cout << __func__ << std::endl;
+	int8 toComp = 0;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+	setCarry(0);
+	if (op == 0xf6) // or a, imm8
+	{
+		toComp = currentOP;
+		proccedOP;
+	}
+	else // or a, r8
+	{
+		toComp = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+	}
+	A = A | toComp;
+	setZero(!A);
 }
 void gbCPU::cp()
 {
-	std::cout << __func__ << std::endl;
+	int8 toComp = 0;
+	int8 op = currentOP;
+	proccedOP;
+	setN(1);
+	if (op == 0xf6) // cp a, imm8
+	{
+		toComp = currentOP;
+		proccedOP;
+	}
+	else // cp a, r8
+	{
+		toComp = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+	}
+	setCarry(A < toComp);
+	setHCarry((A & 0x0f) < (toComp & 0x0f));
+	setZero(A == toComp);
 }
 void gbCPU::ret()
 {

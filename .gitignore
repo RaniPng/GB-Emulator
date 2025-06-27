@@ -34,4 +34,7 @@
 
 # Build
 */x64
+
+# open vs
+*.opendb
 	

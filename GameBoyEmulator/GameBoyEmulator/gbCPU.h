@@ -21,10 +21,10 @@
 #define setHCarry(b)	F = b? (F | HFLAG): (F & (~HFLAG));
 #define setCarry(b)		F = b? (F | CFLAG): (F & (~CFLAG));
 // get
-#define getZero (F & ZFLAG)
-#define getN (F & NFLAG)
-#define getHCarry (F & HFLAG)
-#define getCarry (F & CFLAG)
+#define getZero (!!(F & ZFLAG))
+#define getN (!!(F & NFLAG))
+#define getHCarry (!!(F & HFLAG))
+#define getCarry (!!(F & CFLAG))
 
 
 class gbCPU
