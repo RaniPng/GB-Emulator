@@ -71,7 +71,9 @@ public: // temp~~~~~~
 	void fetch();
 	// op codes funcs
 	//std::unordered_map<int8, std::function<void()>> opTable[5];
-	std::map<int8, std::function<void()>> opTable[5];
+	//std::map<int8, std::function<void()>> opTable[5];
+	std::map<int8, std::function<void()>> opTable;
+	std::map<int8, std::function<void()>> opTable$CB;
 	void nop();
 	void ld();
 	void inc();

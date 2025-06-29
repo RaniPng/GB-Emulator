@@ -19,225 +19,224 @@ gbCPU::gbCPU()
 {
 #pragma region Block0
 	// block 0
-	opTable[0][0x0] = [this]() {nop(); };
+	opTable[0x0] = [this]() {nop(); };
 
-	opTable[0][0x1] = [this]() {ld(); };
+	opTable[0x1] = [this]() {ld(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0x1 | subset] = [this]() {ld(); };
-	opTable[0][0x2] = [this]() {ld(); };
+		opTable[0x1 | subset] = [this]() {ld(); };
+	opTable[0x2] = [this]() {ld(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0x2 | subset] = [this]() {ld(); };
-	opTable[0][0xa] = [this]() {ld(); };
+		opTable[0x2 | subset] = [this]() {ld(); };
+	opTable[0xa] = [this]() {ld(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0xa | subset] = [this]() {ld(); };
-	opTable[0][0x8] = [this]() {ld(); };
+		opTable[0xa | subset] = [this]() {ld(); };
+	opTable[0x8] = [this]() {ld(); };
 
-	opTable[0][0x3] = [this]() {inc(); };
+	opTable[0x3] = [this]() {inc(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0x3 | subset] = [this]() {inc(); };
-	opTable[0][0xb] = [this]() {dec(); };
+		opTable[0x3 | subset] = [this]() {inc(); };
+	opTable[0xb] = [this]() {dec(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0xb | subset] = [this]() {dec(); };
-	opTable[0][0x9] = [this]() {add(); };
+		opTable[0xb | subset] = [this]() {dec(); };
+	opTable[0x9] = [this]() {add(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[0][0x9 | subset] = [this]() {add(); };
+		opTable[0x9 | subset] = [this]() {add(); };
 
-	opTable[0][0x4] = [this]() {inc(); };
+	opTable[0x4] = [this]() {inc(); };
 	FOR_BIT_SUBSETS(0x38, subset)
-		opTable[0][0x4 | subset] = [this]() { inc(); };
-	opTable[0][0x5] = [this]() {dec(); };
+		opTable[0x4 | subset] = [this]() { inc(); };
+	opTable[0x5] = [this]() {dec(); };
 	FOR_BIT_SUBSETS(0x38, subset)
-		opTable[0][0x5 | subset] = [this]() { dec(); };
+		opTable[0x5 | subset] = [this]() { dec(); };
 
-	opTable[0][0x6] = [this]() {ld(); };
+	opTable[0x6] = [this]() {ld(); };
 	FOR_BIT_SUBSETS(0x38, subset)
-		opTable[0][0x6 | subset] = [this]() { ld(); };
+		opTable[0x6 | subset] = [this]() { ld(); };
 
-	opTable[0][0x7] = [this]() {rlca(); };
-	opTable[0][0xf] = [this]() {rrca(); };
-	opTable[0][0x17] = [this]() {rla(); };
-	opTable[0][0x1f] = [this]() {rra(); };
-	opTable[0][0x27] = [this]() {daa(); };
-	opTable[0][0x2f] = [this]() {cpl(); };
-	opTable[0][0x37] = [this]() {scf(); };
-	opTable[0][0x3f] = [this]() {ccf(); };
+	opTable[0x7] = [this]() {rlca(); };
+	opTable[0xf] = [this]() {rrca(); };
+	opTable[0x17] = [this]() {rla(); };
+	opTable[0x1f] = [this]() {rra(); };
+	opTable[0x27] = [this]() {daa(); };
+	opTable[0x2f] = [this]() {cpl(); };
+	opTable[0x37] = [this]() {scf(); };
+	opTable[0x3f] = [this]() {ccf(); };
 
-	opTable[0][0x18] = [this]() {jr(); };
-	opTable[0][0x20] = [this]() {jr(); };
+	opTable[0x18] = [this]() {jr(); };
+	opTable[0x20] = [this]() {jr(); };
 	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[0][0x20 | subset] = [this]() { jr(); };
+		opTable[0x20 | subset] = [this]() { jr(); };
 
-	opTable[0][0x10] = [this]() {stop(); };
+	opTable[0x10] = [this]() {stop(); };
 #pragma endregion
 
 #pragma region Block1
 	// block 1
-	opTable[1][0x40] = [this]() {ld(); };
+	opTable[0x40] = [this]() {ld(); };
 	FOR_BIT_SUBSETS(0x3f, subset)
-		opTable[1][0x40 | subset] = [this]() { ld(); };
-	opTable[1][0x76] = [this]() {halt(); };
+		opTable[0x40 | subset] = [this]() { ld(); };
+	opTable[0x76] = [this]() {halt(); };
 #pragma endregion
 
 #pragma region Block2
 	// block 2
-	opTable[2][0x80] = [this]() {add(); };
+	opTable[0x80] = [this]() {add(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0x80 | subset] = [this]() { add(); };
-	opTable[2][0x88] = [this]() {adc(); };
+		opTable[0x80 | subset] = [this]() { add(); };
+	opTable[0x88] = [this]() {adc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0x88 | subset] = [this]() { adc(); };
-	opTable[2][0x90] = [this]() {sub(); };
+		opTable[0x88 | subset] = [this]() { adc(); };
+	opTable[0x90] = [this]() {sub(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0x90 | subset] = [this]() { sub(); };
-	opTable[2][0x98] = [this]() {sbc(); };
+		opTable[0x90 | subset] = [this]() { sub(); };
+	opTable[0x98] = [this]() {sbc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0x98 | subset] = [this]() { sbc(); };
-	opTable[2][0xa0] = [this]() {_and(); };
+		opTable[0x98 | subset] = [this]() { sbc(); };
+	opTable[0xa0] = [this]() {_and(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0xa0 | subset] = [this]() { _and(); };
-	opTable[2][0xa8] = [this]() {_xor(); };
+		opTable[0xa0 | subset] = [this]() { _and(); };
+	opTable[0xa8] = [this]() {_xor(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0xa8 | subset] = [this]() { _xor(); };
-	opTable[2][0xb0] = [this]() {_or(); };
+		opTable[0xa8 | subset] = [this]() { _xor(); };
+	opTable[0xb0] = [this]() {_or(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0xb0 | subset] = [this]() { _or(); };
-	opTable[2][0xb8] = [this]() {cp(); };
+		opTable[0xb0 | subset] = [this]() { _or(); };
+	opTable[0xb8] = [this]() {cp(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[2][0xb8 | subset] = [this]() { cp(); };
+		opTable[0xb8 | subset] = [this]() { cp(); };
 #pragma endregion
 
 #pragma region Block3
 	// block 3
-	opTable[3][0xc6] = [this]() {add(); };
-	opTable[3][0xce] = [this]() {adc(); };
-	opTable[3][0xd6] = [this]() {sub(); };
-	opTable[3][0xde] = [this]() {sbc(); };
-	opTable[3][0xe6] = [this]() {_and(); };
-	opTable[3][0xee] = [this]() {_xor(); };
-	opTable[3][0xf6] = [this]() {_or(); };
-	opTable[3][0xfe] = [this]() {cp(); };
+	opTable[0xc6] = [this]() {add(); };
+	opTable[0xce] = [this]() {adc(); };
+	opTable[0xd6] = [this]() {sub(); };
+	opTable[0xde] = [this]() {sbc(); };
+	opTable[0xe6] = [this]() {_and(); };
+	opTable[0xee] = [this]() {_xor(); };
+	opTable[0xf6] = [this]() {_or(); };
+	opTable[0xfe] = [this]() {cp(); };
 
-	opTable[3][0xc0] = [this]() {ret(); };
+	opTable[0xc0] = [this]() {ret(); };
 	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[3][0xc0 | subset] = [this]() { ret(); };
-	opTable[3][0xc9] = [this]() {ret(); };
-	opTable[3][0xd9] = [this]() {reti(); };
-	opTable[3][0xc2] = [this]() {jp(); };
+		opTable[0xc0 | subset] = [this]() { ret(); };
+	opTable[0xc9] = [this]() {ret(); };
+	opTable[0xd9] = [this]() {reti(); };
+	opTable[0xc2] = [this]() {jp(); };
 	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[3][0xc2 | subset] = [this]() { jp(); };
-	opTable[3][0xc3] = [this]() {jp(); };
-	opTable[3][0xe9] = [this]() {jp(); };
-	opTable[3][0xc4] = [this]() {call(); };
+		opTable[0xc2 | subset] = [this]() { jp(); };
+	opTable[0xc3] = [this]() {jp(); };
+	opTable[0xe9] = [this]() {jp(); };
+	opTable[0xc4] = [this]() {call(); };
 	FOR_BIT_SUBSETS(0x18, subset)
-		opTable[3][0xc4 | subset] = [this]() { call(); };
-	opTable[3][0xcd] = [this]() {call(); };
-	opTable[3][0xc7] = [this]() {rst(); };
+		opTable[0xc4 | subset] = [this]() { call(); };
+	opTable[0xcd] = [this]() {call(); };
+	opTable[0xc7] = [this]() {rst(); };
 	FOR_BIT_SUBSETS(0x38, subset)
-		opTable[3][0xc7 | subset] = [this]() { rst(); };
+		opTable[0xc7 | subset] = [this]() { rst(); };
 
 
-	opTable[3][0xc1] = [this]() {pop(); };
+	opTable[0xc1] = [this]() {pop(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[3][0xc1 | subset] = [this]() { pop(); };
-	opTable[3][0xc5] = [this]() {push(); };
+		opTable[0xc1 | subset] = [this]() { pop(); };
+	opTable[0xc5] = [this]() {push(); };
 	FOR_BIT_SUBSETS(0x30, subset)
-		opTable[3][0xc5 | subset] = [this]() { push(); };
+		opTable[0xc5 | subset] = [this]() { push(); };
 
-	opTable[3][0xcb] = [this]() {cb$(); };// prefix
+	opTable[0xcb] = [this]() {cb$(); };// prefix
 
-	opTable[3][0xe2] = [this]() {ldh(); };
-	opTable[3][0xe0] = [this]() {ldh(); };
-	opTable[3][0xea] = [this]() {ld(); };
-	opTable[3][0xf2] = [this]() {ldh(); };
-	opTable[3][0xf0] = [this]() {ldh(); };
-	opTable[3][0xfa] = [this]() {ld(); };
+	opTable[0xe2] = [this]() {ldh(); };
+	opTable[0xe0] = [this]() {ldh(); };
+	opTable[0xea] = [this]() {ld(); };
+	opTable[0xf2] = [this]() {ldh(); };
+	opTable[0xf0] = [this]() {ldh(); };
+	opTable[0xfa] = [this]() {ld(); };
 
-	opTable[3][0xe8] = [this]() {add(); };
-	opTable[3][0xf8] = [this]() {ld(); };
-	opTable[3][0xf9] = [this]() {ld(); };
+	opTable[0xe8] = [this]() {add(); };
+	opTable[0xf8] = [this]() {ld(); };
+	opTable[0xf9] = [this]() {ld(); };
 
-	opTable[3][0xf3] = [this]() {di(); };
-	opTable[3][0xfb] = [this]() {ei(); };
+	opTable[0xf3] = [this]() {di(); };
+	opTable[0xfb] = [this]() {ei(); };
 #pragma endregion
 
 #pragma region BlockCB
 	// block cb
-	opTable[4][0x0] = [this]() {rlc(); };
+	opTable$CB[0x0] = [this]() {rlc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x0 | subset] = [this]() { rlc(); };
-	opTable[4][0x8] = [this]() {rrc(); };
+		opTable$CB[0x0 | subset] = [this]() { rlc(); };
+	opTable$CB[0x8] = [this]() {rrc(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x8 | subset] = [this]() { rrc(); };
-	opTable[4][0x10] = [this]() {rl(); };
+		opTable$CB[0x8 | subset] = [this]() { rrc(); };
+	opTable$CB[0x10] = [this]() {rl(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x10 | subset] = [this]() { rl(); };
-	opTable[4][0x18] = [this]() {rr(); };
+		opTable$CB[0x10 | subset] = [this]() { rl(); };
+	opTable$CB[0x18] = [this]() {rr(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x18 | subset] = [this]() { rr(); };
-	opTable[4][0x20] = [this]() {sla(); };
+		opTable$CB[0x18 | subset] = [this]() { rr(); };
+	opTable$CB[0x20] = [this]() {sla(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x20 | subset] = [this]() { sla(); };
-	opTable[4][0x28] = [this]() {sra(); };
+		opTable$CB[0x20 | subset] = [this]() { sla(); };
+	opTable$CB[0x28] = [this]() {sra(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x28 | subset] = [this]() { sra(); };
-	opTable[4][0x30] = [this]() {swap(); };
+		opTable$CB[0x28 | subset] = [this]() { sra(); };
+	opTable$CB[0x30] = [this]() {swap(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x30 | subset] = [this]() { swap(); };
-	opTable[4][0x38] = [this]() {srl(); };
+		opTable$CB[0x30 | subset] = [this]() { swap(); };
+	opTable$CB[0x38] = [this]() {srl(); };
 	FOR_BIT_SUBSETS(0x7, subset)
-		opTable[4][0x38 | subset] = [this]() { srl(); };
+		opTable$CB[0x38 | subset] = [this]() { srl(); };
 
-	opTable[4][0x40] = [this]() {bit(); };
+	opTable$CB[0x40] = [this]() {bit(); };
 	FOR_BIT_SUBSETS(0x3f, subset)
-		opTable[4][0x40 | subset] = [this]() { bit(); };
-	opTable[4][0x80] = [this]() {res(); };
+		opTable$CB[0x40 | subset] = [this]() { bit(); };
+	opTable$CB[0x80] = [this]() {res(); };
 	FOR_BIT_SUBSETS(0x3f, subset)
-		opTable[4][0x80 | subset] = [this]() { res(); };
-	opTable[4][0xc0] = [this]() {set(); };
+		opTable$CB[0x80 | subset] = [this]() { res(); };
+	opTable$CB[0xc0] = [this]() {set(); };
 	FOR_BIT_SUBSETS(0x3f, subset)
-		opTable[4][0xc0 | subset] = [this]() { set(); };
+		opTable$CB[0xc0 | subset] = [this]() { set(); };
 
 #pragma endregion
-
 
 }
 
 void gbCPU::test()
 {
-	std::cout << opTable[0].size() << std::endl;
-	std::cout << opTable[1].size() << std::endl;
-	std::cout << opTable[2].size() << std::endl;
-	std::cout << opTable[3].size() << std::endl;
-	std::cout << opTable[4].size() << std::endl;
+	std::cout << opTable.size() << std::endl;
+	std::cout << opTable.size() << std::endl;
+	std::cout << opTable.size() << std::endl;
+	std::cout << opTable.size() << std::endl;
+	std::cout << opTable$CB.size() << std::endl;
 
-	for (const auto& pair : opTable[0]) {
+	for (const auto& pair : opTable) {
 		int key = pair.first;
 		auto& func = pair.second;
 		std::cout << "0x" << std::hex << key << " ";
 		func();
 	}
-	for (const auto& pair : opTable[1]) {
-		int key = pair.first;
-		auto& func = pair.second;
-		std::cout << "0x" << std::hex << key << " ";
-		func();
-	}
-
-	for (const auto& pair : opTable[2]) {
+	for (const auto& pair : opTable) {
 		int key = pair.first;
 		auto& func = pair.second;
 		std::cout << "0x" << std::hex << key << " ";
 		func();
 	}
 
-	for (const auto& pair : opTable[3]) {
+	for (const auto& pair : opTable) {
 		int key = pair.first;
 		auto& func = pair.second;
 		std::cout << "0x" << std::hex << key << " ";
 		func();
 	}
 
-	for (const auto& pair : opTable[4]) {
+	for (const auto& pair : opTable) {
+		int key = pair.first;
+		auto& func = pair.second;
+		std::cout << "0x" << std::hex << key << " ";
+		func();
+	}
+
+	for (const auto& pair : opTable$CB) {
 		int key = pair.first;
 		auto& func = pair.second;
 		std::cout << "0x" << std::hex << key << " ";
@@ -248,11 +247,21 @@ void gbCPU::test()
 
 void gbCPU::tick()
 {
+	// timer
+	decodeOPcode();
+}
+
+void gbCPU::cb$()
+{
+	proccedOP;
+	int8 op = currentOP;
+	opTable$CB[op]();
 }
 
 void gbCPU::decodeOPcode()
 {
-
+	int8 op = currentOP;
+	opTable[op]();
 }
 
 int8 gbCPU::getConditionOp(int8 cond)
@@ -407,10 +416,13 @@ void gbCPU::nop()
 {
 	// do nothing?... i guess
 	// only used for the timmer and cycele things. will be implemented later
+	proccedOP;
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::ld()
 {
+	int16 immOP16 = 0; // avoid warrnings
+	int8 immOP8 = 0; // avoid warrnings
 	int8 op = currentOP;
 	proccedOP;
 	int8 block = GetBLOCK(op);
@@ -419,18 +431,18 @@ void gbCPU::ld()
 	case BLOCK0:
 		if (op & 0b110) // ld r8, imm8
 		{
-			int8 num = currentOP;
+			immOP8 = currentOP;
 			proccedOP;
-			set8RegisterOp(tools::getSumRightRotateMask(op, 3, 0b111), num);
+			set8RegisterOp(tools::getSumRightRotateMask(op, 3, 0b111), immOP8);
 		}
 		else
 		{
 			switch (op & 0b1111)
 			{
 			case 0b0001: // ld r16, imm16
-				int16 num = currentOP16;
+				immOP16 = currentOP16;
 				proccedOP16;
-				set16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11), num);
+				set16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11), immOP16);
 				break;
 			case 0b0010: // ld [r16mem], a
 				setRegisterMemoryOp(tools::getSumRightRotateMask(op, 4, 0b11), A);
@@ -452,22 +464,24 @@ void gbCPU::ld()
 			set8RegisterOp(tools::getSumRightRotateMask(op, 3, 0b111), tools::getSumRightRotateMask(op, 0, 0b111));
 		break;
 	case BLOCK3:
+		int16 addr = 0;
+		int8 toAdd = 0;
 		switch (op)
 		{
 		case 0b11101010: // ld [imm16], a
-			int16 addr = currentOP16;
+			addr = currentOP16;
 			proccedOP16;
 			setAddressMemory(addr, A);
 			break;
 		case 0b11111010: // ld a, [imm16]
-			int16 addr = currentOP16;
+			addr = currentOP16;
 			proccedOP16;
 			A = getAddressMemory(addr);
 			break;
 		case 0b11111000: // ld hl, sp + imm8
 			setZero(0);
 			setN(0);
-			int8 toAdd = currentOP;
+			toAdd = currentOP;
 			proccedOP;
 			setHCarry(((SP & 0x0f) + (toAdd & 0x0f)) > 0x0f);
 			setHCarry(((SP & 0xff) + (toAdd & 0xff)) > 0xff);
@@ -477,12 +491,9 @@ void gbCPU::ld()
 			SP = HL;
 			break;
 		}
+		break;
 
-		break;
-	default:
-		break;
 	}
-	std::cout << __func__ << std::endl;
 }
 void gbCPU::inc()
 {
@@ -530,39 +541,42 @@ void gbCPU::add()
 	proccedOP;
 	setN(0);
 	int8 opType = GetBLOCK(op); // get the block
+
+	int16 toAdd16 = 0; // avoid warrnings
+	int8 toAdd8 = 0; // avoid warrnings
 	switch (opType)
 	{
 	case BLOCK0:
 		// add hl, r16
-		int16 toAdd = get16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11));
-		setCarry((HL + toAdd) > 0xffff);
-		setHCarry(((HL & 0x0fff) + (toAdd & 0x0fff)) > 0x0fff);
-		HL += toAdd;
+		toAdd16 = get16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11));
+		setCarry((HL + toAdd16) > 0xffff);
+		setHCarry(((HL & 0x0fff) + (toAdd16 & 0x0fff)) > 0x0fff);
+		HL += toAdd16;
 		break;
 	case BLOCK2:
 		// add a, r8
-		int8 toAdd = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
-		setCarry((A + toAdd) > 0xff);
-		setHCarry(((A & 0x0f) + (toAdd & 0x0f)) > 0x0f);
-		A += toAdd;
+		toAdd8 = get8RegisterOp(tools::getSumRightRotateMask(op, 0, 0b111));
+		setCarry((A + toAdd8) > 0xff);
+		setHCarry(((A & 0x0f) + (toAdd8 & 0x0f)) > 0x0f);
+		A += toAdd8;
 		setZero(!A);
 		break;
 	case BLOCK3:
-		int8 toAdd = currentOP;
+		toAdd8 = currentOP;
 		proccedOP;
 		if (op == 0xc6) // add a, imm8
 		{
-			setCarry((A + toAdd) > 0xff);
-			setHCarry(((A & 0x0f) + (toAdd & 0x0f)) > 0x0f);
-			A += toAdd;
+			setCarry((A + toAdd8) > 0xff);
+			setHCarry(((A & 0x0f) + (toAdd8 & 0x0f)) > 0x0f);
+			A += toAdd8;
 			setZero(!A);
 		}
 		else if (op == 0xc8) // add sp, imm8
 		{
 			setZero(0);
-			setCarry(((SP & 0xff) + toAdd) > 0xff);
-			setHCarry(((SP & 0x0f) + (toAdd & 0x0f)) > 0x0f);
-			SP += toAdd;
+			setCarry(((SP & 0xff) + toAdd8) > 0xff);
+			setHCarry(((SP & 0x0f) + (toAdd8 & 0x0f)) > 0x0f);
+			SP += toAdd8;
 		}
 		break;
 	}
@@ -570,6 +584,7 @@ void gbCPU::add()
 void gbCPU::halt()
 {
 	// i guess do nothing for now too... untill timer and interrupt is implemented
+	proccedOP;
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::adc()
@@ -776,122 +791,376 @@ void gbCPU::swap()
 	int8 reg = get8RegisterOp(regPos);
 	reg = ((reg & 0x0f) << 4) | ((reg & 0xf0) >> 4);
 	set8RegisterOp(regPos, reg);
-	setZero(reg);
+	setZero(!reg);
+}
+void gbCPU::cpl()
+{
+	proccedOP;
+	setN(1);
+	setHCarry(1);
+	A = ~A;
 }
 void gbCPU::stop()
 {
+	proccedOP;
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::daa()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	setHCarry(0);
+	int8 toAdjust = 0;
+
+	if (getN)
+	{
+		if (getHCarry)
+			toAdjust += 0x6;
+		if (getCarry)
+			toAdjust += 0x60;
+		A -= toAdjust;
+	}
+	else
+	{
+		if (getHCarry || (A & 0x0f) > 9)
+			toAdjust += 0x6;
+		if (getCarry || A > 0x99)
+		{
+			toAdjust += 0x60;
+			setCarry(1);
+		}
+		A += toAdjust;
+	}
+	setZero(!A);
 }
 void gbCPU::di()
 {
+	// nothing to do untill interrupts complete
+	proccedOP;
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::ei()
 {
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::cpl()
-{
+	// nothing to do untill interrupts complete
+	proccedOP;
 	std::cout << __func__ << std::endl;
 }
 void gbCPU::scf()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+	setCarry(1);
 }
 void gbCPU::ccf()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+	setCarry(!getCarry);
 }
 void gbCPU::rlca()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	setZero(0);
+	setN(0);
+	setHCarry(0);
+
+	setCarry(A & 0x80);
+	A = (A << 1) | ((A & 0x80) >> 7);
 }
 void gbCPU::rrca()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	setZero(0);
+	setN(0);
+	setHCarry(0);
+
+	setCarry(A & 0x01);
+	A = (A >> 1) | ((A & 0x01) << 7);
 }
 void gbCPU::rla()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	setZero(0);
+	setN(0);
+	setHCarry(0);
+
+	int8 carry = getCarry;
+	setCarry(A & 0x80);
+	A = (A << 1) | carry;
+
 }
 void gbCPU::rra()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	setZero(0);
+	setN(0);
+	setHCarry(0);
+
+	int8 carry = getCarry;
+	setCarry(A & 0x01);
+	A = (A >> 1) | (carry << 7);
 }
 void gbCPU::rlc()
 {
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::rrc()
-{
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+	setCarry(reg & 0x80);
+	reg = (reg << 1) | ((reg & 0x80) >> 7);
+	set8RegisterOp(regOP, reg);
+	setZero(!reg);
 }
 void gbCPU::rl()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+	int8 carry = getCarry;
+	setCarry(reg & 0x80);
+	reg = (reg << 1) | (carry);
+	set8RegisterOp(regOP, reg);
+	setZero(!reg);
+}
+void gbCPU::rrc()
+{
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+	setCarry(reg & 0x01);
+	reg = (reg >> 1) | ((reg & 0x01) << 7);
+	set8RegisterOp(regOP, reg);
+	setZero(!reg);
 }
 void gbCPU::rr()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+	int8 carry = getCarry;
+	setCarry(reg & 0x01);
+	reg = (reg >> 1) | (carry << 7);
+	set8RegisterOp(regOP, reg);
+	setZero(!reg);
+
 }
 void gbCPU::sla()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+	setCarry(reg & 0x80);
+	reg = reg << 1;
+	set8RegisterOp(regOP, reg);
+	setZero(!reg);
 }
 void gbCPU::sra()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+	setCarry(reg & 0x01);
+	reg = (reg >> 1) | (reg & 0x80);
+	set8RegisterOp(regOP, reg);
+	setZero(!reg);
 }
 void gbCPU::srl()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(0);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+	setCarry(reg & 0x01);
+	reg = (reg >> 1);
+	set8RegisterOp(regOP, reg);
+	setZero(!reg);
 }
 void gbCPU::bit()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	setN(0);
+	setHCarry(1);
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 bitInd = tools::getSumRightRotateMask(op, 3, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+
+	setZero(!(reg & (1 << bitInd)));
 }
 void gbCPU::res()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 bitInd = tools::getSumRightRotateMask(op, 3, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+
+	reg = reg & (~(1 << bitInd));
 }
 void gbCPU::set()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+
+	int8 regOP = tools::getSumRightRotateMask(op, 0, 0b111);
+	int8 bitInd = tools::getSumRightRotateMask(op, 3, 0b111);
+	int8 reg = get8RegisterOp(regOP);
+
+	reg = reg | (1 << bitInd);
+	set8RegisterOp(regOP, reg);
 }
 void gbCPU::ret()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+
+	bool retFunc = false;
+	if (op == 0b11001001) // ret
+		retFunc = true;
+	else // ret cond
+		retFunc = (getConditionOp(tools::getSumRightRotateMask(op, 3, 0b11)));
+
+	if (retFunc)
+	{
+		int16 addr = 0;
+		addr = getAddressMemory(SP++) << 8;
+		addr = addr | getAddressMemory(SP++);
+		PC = addr;
+	}
 }
 void gbCPU::reti()
 {
-	std::cout << __func__ << std::endl;
+	proccedOP;
+	int16 addr = 0;
+	addr = getAddressMemory(SP++) << 8;
+	addr = addr | getAddressMemory(SP++);
+	PC = addr;
+	// now it should enable interrupts
 }
 void gbCPU::jp()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+
+	int16 addr = 0;
+	switch (op)
+	{
+	case 0b11000011: // jp imm16
+		addr = nextOP16;
+		proccedOP16;
+		PC = addr;
+		break;
+	case 0b11101001: // jp hl
+		PC = HL;
+		break;
+	default:
+		// jp cond, imm16
+		addr = nextOP16;
+		proccedOP16;
+		if (getConditionOp(tools::getSumRightRotateMask(op, 3, 0b11)))
+			PC = addr;
+		break;
+	}
 }
 void gbCPU::jr()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	int8 offset = currentOP;
+	proccedOP;
+
+	if (op == 0b11000011) // jr imm8
+	{
+		PC += offset;
+	}
+	else // jr cond, imm8
+	{
+		if (getConditionOp(tools::getSumRightRotateMask(op, 3, 0b11)))
+			PC += offset;
+	}
 }
 void gbCPU::call()
 {
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	int16 addr = currentOP16;
+	proccedOP16;
+	bool callFunc = false;
+
+	if (op == 0b11000011) // call imm16
+		callFunc = true;
+	else // call cond, imm16
+		callFunc = (getConditionOp(tools::getSumRightRotateMask(op, 3, 0b11)));
+
+	if (callFunc)
+	{
+		setAddressMemory(--SP, (PC >> 8) & 0xff);
+		setAddressMemory(--SP, PC & 0xff);
+		PC = addr;
+	}
 }
 void gbCPU::rst()
 {
-	std::cout << __func__ << std::endl;
-}
-void gbCPU::cb$()
-{
-	std::cout << __func__ << std::endl;
+	int8 op = currentOP;
+	proccedOP;
+	int16 addr = op & 0b00111000;
+
+	setAddressMemory(--SP, (PC >> 8) & 0xff);
+	setAddressMemory(--SP, PC & 0xff);
+	PC = addr;
 }
 void gbCPU::ldh()
 {
-	std::cout << __func__ << std::endl;
-}
+	int8 op = currentOP;
+	proccedOP;
+	int16 addr = 0;
 
+	switch (op)
+	{
+	case 0b11100010: // ldh [c], a
+		setAddressMemory(0xff00 + C, A);
+		break;
+	case 0b11100000: // ldh [imm8], a
+		addr = currentOP;
+		proccedOP;
+		setAddressMemory(0xff00 + addr, A);
+		break;
+	case 0b11110010: // ldh a, [c]
+		A = getAddressMemory(0xff00 + C);
+		break;
+	case 0b11110000: // ldh a, [imm8]
+		addr = currentOP;
+		proccedOP;
+		A = getAddressMemory(0xff00 + addr);
+		break;
+	}
+}
