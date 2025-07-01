@@ -9,8 +9,8 @@ union Register
 {
 	struct
 	{
-		int8 high;
 		int8 low;
+		int8 high;
 	};
 	int16 full;
 };

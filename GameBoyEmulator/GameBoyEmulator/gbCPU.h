@@ -6,25 +6,25 @@
 #include <map>
 
 // zero flag - set if the last calculation returned zero 
-#define ZFLAG 0x40
+#define ZFLAG 0x80
 // n flag - indicates whether the previous instruction has been a subtraction
-#define NFLAG 0x20
+#define NFLAG 0x40
 // half carry flag - carry flag but for the 4 lower bits
-#define HFLAG 0x10
+#define HFLAG 0x20
 // carry flag - carry flag for the whole 8 bits
-#define CFLAG 0x8
+#define CFLAG 0x10
 
 /*flag macros*/
 // set
-#define setZero(b)		F = b? (F | ZFLAG): (F & (~ZFLAG));
-#define setN(b)			F = b? (F | NFLAG): (F & (~NFLAG));
-#define setHCarry(b)	F = b? (F | HFLAG): (F & (~HFLAG));
-#define setCarry(b)		F = b? (F | CFLAG): (F & (~CFLAG));
+#define setZero(b)		FF = (b)? (FF | ZFLAG): (FF & (~ZFLAG));
+#define setN(b)			FF = (b)? (FF | NFLAG): (FF & (~NFLAG));
+#define setHCarry(b)	FF = (b)? (FF | HFLAG): (FF & (~HFLAG));
+#define setCarry(b)		FF = (b)? (FF | CFLAG): (FF & (~CFLAG));
 // get
-#define getZero (!!(F & ZFLAG))
-#define getN (!!(F & NFLAG))
-#define getHCarry (!!(F & HFLAG))
-#define getCarry (!!(F & CFLAG))
+#define getZero (!!(FF & ZFLAG))
+#define getN (!!(FF & NFLAG))
+#define getHCarry (!!(FF & HFLAG))
+#define getCarry (!!(FF & CFLAG))
 
 
 class gbCPU
@@ -36,20 +36,19 @@ private:
 	// AF - A (high) is used for all the calculations and transformations, while F is used to indicate the flags
 	Register _AF;
 #define AF (_AF.full)
-#define A (_AF.high)
-#define F (_AF.low)
+#define AA (_AF.high)
+#define FF (_AF.low)
 	Register _BC;
 #define BC (_BC.full)
-#define B (_BC.high)
-#define C (_BC.low)
+#define BB (_BC.high)
+#define CC (_BC.low)
 	Register _DE;
 #define DE (_DE.full)
-#define D (_DE.high)
-#define E (_DE.low)
+#define DD (_DE.high)
+#define EE (_DE.low)
 	Register _HL;
 #define HL (_HL.full)
-#define H (_HL.high)
-	// L define is in used
+#define HH (_HL.high)
 #define LL (_HL.low)
 	/*pointers*/
 	int16 SP; // "pointer" to the stack current address
@@ -59,6 +58,9 @@ private:
 public: // temp~~~~~~
 	void test();
 	void tick();
+	int getRegJson(int c);
+	void setRegJson(int c, int setNum);
+private:
 	void decodeOPcode();
 	int8 getConditionOp(int8 cond);
 	void set8RegisterOp(int8 reg, int8 setNum);

@@ -37,6 +37,9 @@
 */.vs
 **/x64/
 **/.vs/
+*/testCPU
+**/testCPU/
+*/testCPU/*
 
 # open vs
 *.opendb

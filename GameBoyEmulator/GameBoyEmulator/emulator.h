@@ -7,5 +7,6 @@ static class emulator
 public: // temp
 	static gbCPU CPU;
 	static gbMM MM;
+	static void run();
 };
 

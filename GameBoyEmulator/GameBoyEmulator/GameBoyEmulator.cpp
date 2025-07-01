@@ -1,5 +1,3 @@
-#include "gbCPU.h"
-#include "gbMM.h"
 #include "emulator.h"
 #include <iostream>
 
@@ -7,8 +5,7 @@
 
 int main()
 {
-
-    emulator::CPU.test();
+    emulator::run();
     std::cout << "Hello World!\n";
 }
 
