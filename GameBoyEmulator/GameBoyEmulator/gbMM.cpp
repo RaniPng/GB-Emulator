@@ -14,6 +14,16 @@ uint16_t parse_hex(const std::string& hex_str) {
 	return static_cast<uint16_t>(std::stoi(hex_str, nullptr, 16));
 }
 
+int8 gbMM::read8(int16 addr)
+{
+	return memory[addr];
+}
+
+void gbMM::write8(int16 addr, int8 val)
+{
+	memory[addr] = val;
+}
+
 bool gbMM::mmTest(std::string fileN)
 {
 	std::remove("OpCodelog.txt");
@@ -134,16 +144,16 @@ bool gbMM::mmTest2(std::string fileN)
 		// Initial CPU values
 		auto intVal = test["initial"];
 		//emulator::CPU
-		emulator::CPU.setRegJson('a', intVal.contains("a") ? parse_hex(intVal["a"]) : 0);
-		emulator::CPU.setRegJson('b', intVal.contains("b") ? parse_hex(intVal["b"]) : 0);
-		emulator::CPU.setRegJson('c', intVal.contains("c") ? parse_hex(intVal["c"]) : 0);
-		emulator::CPU.setRegJson('d', intVal.contains("d") ? parse_hex(intVal["d"]) : 0);
-		emulator::CPU.setRegJson('e', intVal.contains("e") ? parse_hex(intVal["e"]) : 0);
-		emulator::CPU.setRegJson('f', intVal.contains("f") ? parse_hex(intVal["f"]) : 0);
-		emulator::CPU.setRegJson('h', intVal.contains("h") ? parse_hex(intVal["h"]) : 0);
-		emulator::CPU.setRegJson('l', intVal.contains("l") ? parse_hex(intVal["l"]) : 0);
-		emulator::CPU.setRegJson('p', intVal.contains("pc") ? parse_hex(intVal["pc"]) : 0);
-		emulator::CPU.setRegJson('s', intVal.contains("sp") ? parse_hex(intVal["sp"]) : 0);
+		emulator::CPU.setRegJson('a', intVal.contains("a") ? (intVal["a"].get<int>()) : 0);
+		emulator::CPU.setRegJson('b', intVal.contains("b") ? (intVal["b"].get<int>()) : 0);
+		emulator::CPU.setRegJson('c', intVal.contains("c") ? (intVal["c"].get<int>()) : 0);
+		emulator::CPU.setRegJson('d', intVal.contains("d") ? (intVal["d"].get<int>()) : 0);
+		emulator::CPU.setRegJson('e', intVal.contains("e") ? (intVal["e"].get<int>()) : 0);
+		emulator::CPU.setRegJson('f', intVal.contains("f") ? (intVal["f"].get<int>()) : 0);
+		emulator::CPU.setRegJson('h', intVal.contains("h") ? (intVal["h"].get<int>()) : 0);
+		emulator::CPU.setRegJson('l', intVal.contains("l") ? (intVal["l"].get<int>()) : 0);
+		emulator::CPU.setRegJson('p', intVal.contains("pc") ? (intVal["pc"].get<int>()) : 0);
+		emulator::CPU.setRegJson('s', intVal.contains("sp") ? (intVal["sp"].get<int>()) : 0);
 
 		std::cout << "Initial CPU:\n";
 		printCPU();
@@ -154,8 +164,8 @@ bool gbMM::mmTest2(std::string fileN)
 		if (test["initial"].contains("ram")) {
 			for (const auto& entry : test["initial"]["ram"]) {
 				if (entry.size() == 2) {
-					uint16_t addr = parse_hex(entry[0]);
-					uint8_t val = parse_hex(entry[1]);
+					uint16_t addr = (entry[0].get<int>());
+					uint8_t val = (entry[1].get<int>());
 					memory[addr] = val;
 
 					if (memory[addr])
@@ -169,16 +179,16 @@ bool gbMM::mmTest2(std::string fileN)
 
 		// Final CPU values
 		auto final_cpu = test["final"];
-		int8 fa = final_cpu.contains("a") ? parse_hex(final_cpu["a"]) : 0;
-		int8 fb = final_cpu.contains("b") ? parse_hex(final_cpu["b"]) : 0;
-		int8 fc = final_cpu.contains("c") ? parse_hex(final_cpu["c"]) : 0;
-		int8 fd = final_cpu.contains("d") ? parse_hex(final_cpu["d"]) : 0;
-		int8 fe = final_cpu.contains("e") ? parse_hex(final_cpu["e"]) : 0;
-		int8 ff = final_cpu.contains("f") ? parse_hex(final_cpu["f"]) : 0;
-		int8 fh = final_cpu.contains("h") ? parse_hex(final_cpu["h"]) : 0;
-		int8 fl = final_cpu.contains("l") ? parse_hex(final_cpu["l"]) : 0;
-		int16 fpc = final_cpu.contains("pc") ? parse_hex(final_cpu["pc"]) : 0;
-		int16 fsp = final_cpu.contains("sp") ? parse_hex(final_cpu["sp"]) : 0;
+		int8 fa = final_cpu.contains("a") ? (final_cpu["a"].get<int>()) : 0;
+		int8 fb = final_cpu.contains("b") ? (final_cpu["b"].get<int>()) : 0;
+		int8 fc = final_cpu.contains("c") ? (final_cpu["c"].get<int>()) : 0;
+		int8 fd = final_cpu.contains("d") ? (final_cpu["d"].get<int>()) : 0;
+		int8 fe = final_cpu.contains("e") ? (final_cpu["e"].get<int>()) : 0;
+		int8 ff = final_cpu.contains("f") ? (final_cpu["f"].get<int>()) : 0;
+		int8 fh = final_cpu.contains("h") ? (final_cpu["h"].get<int>()) : 0;
+		int8 fl = final_cpu.contains("l") ? (final_cpu["l"].get<int>()) : 0;
+		int16 fpc = final_cpu.contains("pc") ? (final_cpu["pc"].get<int>()) : 0;
+		int16 fsp = final_cpu.contains("sp") ? (final_cpu["sp"].get<int>()) : 0;
 
 		bool rightAnswer = compareRegs(fa, fb, fc, fd, fe, ff, fh, fl, fpc, fsp);
 
@@ -187,7 +197,7 @@ bool gbMM::mmTest2(std::string fileN)
 		if (test["initial"].contains("ram"))
 			for (const auto& entry : test["initial"]["ram"])
 				if (entry.size() == 2) {
-					int16 addr = parse_hex(entry[0]);
+					int16 addr = (entry[0].get<int>());
 					memory[addr] = 0;
 				}
 
@@ -195,8 +205,7 @@ bool gbMM::mmTest2(std::string fileN)
 		std::cout.rdbuf(old); // Restore cout
 		if (!rightAnswer) {
 			std::cout << buffer.str();
-			return false;
-			//exit(-1);
+			exit(-1);
 			if (i++ == 2)
 				return false;
 		}

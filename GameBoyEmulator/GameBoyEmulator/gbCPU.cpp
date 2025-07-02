@@ -3,14 +3,12 @@
 // temp
 #include <iostream>
 #include <fstream>
-#define currentOP (emulator::MM.memory[PC])
-#define currentOP16 ((emulator::MM.memory[PC]) | (emulator::MM.memory[PC+1] << 8))
+#define currentOP (emulator::MM.read8(PC))
+#define currentOP16 ((emulator::MM.read8(PC)) | (emulator::MM.read8(PC+1) << 8))
 #define proccedOP PC++;
 #define proccedOP16 PC+=2;
-#define nextOP (emulator::MM.memory[PC+1])
-#define nextOP16 ((emulator::MM.memory[PC+1])+ (emulator::MM.memory[PC+2]<< 8))
-#define getAddressMemory(addr) (emulator::MM.memory[addr])
-#define setAddressMemory(addr, setNum) emulator::MM.memory[addr] = setNum;
+#define getAddressMemory(addr) (emulator::MM.read8(addr))
+#define setAddressMemory(addr, setNum) emulator::MM.write8(addr, setNum);
 
 #define FOR_BIT_SUBSETS(mask, subset) \
     for (int subset = (mask); subset != 0; subset = ((subset - 1) & (mask)))
@@ -431,8 +429,6 @@ int16 gbCPU::get16RegisterOp(int8 reg)
 
 void gbCPU::setRegisterMemoryOp(int8 mem, int8 setNum)
 {
-	std::cout << std::hex << +mem << "\n";
-	std::cout << std::hex << +setNum << "\n";
 	switch (mem)
 	{
 	case 0x0:
@@ -503,7 +499,6 @@ void gbCPU::ld()
 				set16RegisterOp(tools::getSumRightRotateMask(op, 4, 0b11), immOP16);
 				break;
 			case 0b0010: // ld [r16mem], a
-				std::cout << std::hex << +AA << "\n";
 				setRegisterMemoryOp(tools::getSumRightRotateMask(op, 4, 0b11), AA);
 				break;
 			case 0b1010: // ld a, [r16mem]
@@ -543,8 +538,8 @@ void gbCPU::ld()
 			toAdd = currentOP;
 			proccedOP;
 			setHCarry(((SP & 0x0f) + (toAdd & 0x0f)) > 0x0f);
-			setHCarry(((SP & 0xff) + (toAdd & 0xff)) > 0xff);
-			HL = SP + toAdd;
+			setCarry(((SP & 0xff) + (toAdd & 0xff)) > 0xff);
+			HL = SP + (int8_t)toAdd;
 			break;
 		case 0b11111001: // ld sp, hl
 			SP = HL;
@@ -633,12 +628,13 @@ void gbCPU::add()
 			AA += toAdd8;
 			setZero(!AA);
 		}
-		else if (op == 0xc8) // add sp, imm8
+		else if (op == 0xe8) // add sp, imm8
 		{
+
 			setZero(0);
 			setCarry(((SP & 0xff) + toAdd8) > 0xff);
 			setHCarry(((SP & 0x0f) + (toAdd8 & 0x0f)) > 0x0f);
-			SP += toAdd8;
+			SP += (int8_t)toAdd8;
 		}
 		break;
 	}
@@ -701,7 +697,7 @@ void gbCPU::sbc()
 	int8 op = currentOP;
 	proccedOP;
 	setN(1);
-	if (op == 0xd6) // sub a, imm8
+	if (op == 0xde) // sub a, imm8
 	{
 		toSub = currentOP;
 		proccedOP;
@@ -785,7 +781,7 @@ void gbCPU::cp()
 	int8 op = currentOP;
 	proccedOP;
 	setN(1);
-	if (op == 0xf6) // cp a, imm8
+	if (op == 0xfe) // cp a, imm8
 	{
 		toComp = currentOP;
 		proccedOP;
@@ -823,7 +819,7 @@ void gbCPU::pop()
 		break;
 	case 0xf1:
 		AA = up;
-		FF = low;
+		FF = low & 0xF0;
 		break;
 	}
 }
